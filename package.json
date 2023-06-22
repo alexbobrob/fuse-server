@@ -1,0 +1,19 @@
+{
+    "name": "fuse",
+    "version": "2.0.1",
+    "description": "fuse app",
+    "main": "server.js",
+    "scripts": {
+      "test": "jest",
+      "start": "node server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "cors": "^2.8.5",
+      "express": "^4.17.3"
+    },
+    "devDependencies": {
+      "jest": "^27.5.1"
+    }
+  }
