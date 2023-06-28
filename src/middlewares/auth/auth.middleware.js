@@ -1,19 +1,16 @@
 const jwt = require('jsonwebtoken')
 
-const secretKey = process.env.SECRET
-
 const db = require('../../models')
 
 const { User } = db
 
 const authenticateToken = (req, res, next) => {
-    const token = req.headers.authorization
+    const authHeader = req.headers.authorization
+    const token = authHeader && authHeader.split(' ')[1]
     if (token) {
-        jwt.verify(token, secretKey, (err, decodedToken) => {
-            if (err) {
-                return res.sendStatus(403)
-            }
-            req.user = decodedToken
+        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+            if (err) return res.sendStatus(403)
+            req.user = user
             next()
         })
     } else {
@@ -21,13 +18,18 @@ const authenticateToken = (req, res, next) => {
     }
 }
 
-const checkRequiredAndEmailAvailability = async (req, res, next) => {
+const checkRequiredFields = (req, res, next) => {
     const { email, password } = req.body
 
     if (!email || !password) {
         return res.status(400).json({ error: 'Email or password is missing' })
     }
 
+    next()
+}
+
+const checkEmailAvailability = async (req, res, next) => {
+    const { email } = req.body
     try {
         const existingUser = await User.findOne({ email })
 
@@ -43,5 +45,6 @@ const checkRequiredAndEmailAvailability = async (req, res, next) => {
 
 module.exports = {
     authenticateToken,
-    checkRequiredAndEmailAvailability,
+    checkRequiredFields,
+    checkEmailAvailability,
 }
