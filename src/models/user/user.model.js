@@ -4,6 +4,10 @@ const { isEmail } = require('validator')
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
+    fullName: {
+        type: String,
+        required: true,
+    },
     email: {
         type: String,
         required: true,
@@ -12,6 +16,10 @@ const userSchema = new mongoose.Schema({
         validate: [isEmail, 'Please enter a valid email'],
     },
     password: { type: String, required: true },
+    companyType: {
+        type: String,
+        required: true,
+    },
     createdAt: { type: Date, immutable: true, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 })
