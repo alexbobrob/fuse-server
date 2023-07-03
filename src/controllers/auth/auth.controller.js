@@ -17,9 +17,14 @@ const handleErrors = (err) => {
 }
 
 const signUp = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password, fullName, companyType } = req.body
     try {
-        const newUser = await User.create({ email, password })
+        const newUser = await User.create({
+            email,
+            password,
+            fullName,
+            companyType,
+        })
         const accessToken = jwt.sign(
             { userId: newUser._id, email: newUser.email },
             process.env.JWT_SECRET,
