@@ -18,16 +18,6 @@ const authenticateToken = (req, res, next) => {
     }
 }
 
-const checkRequiredFields = (req, res, next) => {
-    const { email, password } = req.body
-
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Email or password is missing' })
-    }
-
-    next()
-}
-
 const checkEmailAvailability = async (req, res, next) => {
     const { email } = req.body
     try {
@@ -45,6 +35,5 @@ const checkEmailAvailability = async (req, res, next) => {
 
 module.exports = {
     authenticateToken,
-    checkRequiredFields,
     checkEmailAvailability,
 }
