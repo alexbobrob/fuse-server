@@ -1,17 +1,21 @@
 const express = require('express')
 const {
-    checkRequiredFields,
     checkEmailAvailability,
+    validatorMiddleware,
 } = require('../../middlewares')
 const { authController } = require('../../controllers')
 
 const router = express.Router()
 router.post(
     '/signup',
-    checkRequiredFields,
+    validatorMiddleware('registerAndLoginSchema'),
     checkEmailAvailability,
     authController.signUp,
 )
-router.post('/signin', checkRequiredFields, authController.signIn)
+router.post(
+    '/signin',
+    validatorMiddleware('registerAndLoginSchema'),
+    authController.signIn,
+)
 
 module.exports = router
