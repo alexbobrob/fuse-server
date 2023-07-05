@@ -1,10 +1,12 @@
-const Joi = require('joi')
+const { body } = require('express-validator');
 
-const registerAndLoginSchema = {
-    body: Joi.object({
-        email: Joi.string().email().lowercase().required(),
-        password: Joi.string().min(5).required(),
-    }),
-}
+const userCredentialsValidationRules = () => {
+  return [
+    body('email').isEmail().withMessage('Invalid email').normalizeEmail(),
+    body('password')
+      .isLength({ min: 5 })
+      .withMessage('Password must be at least 5 characters long'),
+  ];
+};
 
-module.exports = { registerAndLoginSchema }
+module.exports = { userCredentialsValidationRules };

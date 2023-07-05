@@ -1,23 +1,18 @@
-const validators = require('../../validators')
+const { validationResult } = require('express-validator');
 
-const validatorMiddleware = (validator) => {
-    if (!Object.prototype.hasOwnProperty.call(validators, validator))
-        throw new Error(`'${validator}' validator is not exist`)
+const validate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    return next();
+  }
+  const extractedErrors = [];
+  errors.array().map((err) => extractedErrors.push({ [err.path]: err.msg }));
 
-    return async function validationChecker(req, res, next) {
-        try {
-            const validated = await validators[validator].validateAsync(
-                req.body,
-            )
-            req.body = validated
-            next()
-        } catch (err) {
-            if (err.isJoi) {
-                return res.status(422).json({ error: err.message })
-            }
-            res.status(500).json({ error: 'Something went wrong' })
-        }
-    }
-}
+  return res.status(422).json({
+    errors: extractedErrors,
+  });
+};
 
-module.exports = { validatorMiddleware }
+module.exports = {
+  validate,
+};

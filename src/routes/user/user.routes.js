@@ -1,25 +1,29 @@
-const express = require('express')
-const { validatorMiddleware } = require('../../middlewares')
+const express = require('express');
+const { validate } = require('../../middlewares');
+const { mongoIdValidationRule } = require('../../validators');
 
-const { profileController } = require('../../controllers')
+const { profileController } = require('../../controllers');
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', profileController.getUsers)
+router.get('/', profileController.getUsers);
 router.get(
-    '/:id',
-    validatorMiddleware('idSchema'),
-    profileController.getUserById,
-)
+  '/:id',
+  mongoIdValidationRule(),
+  validate,
+  profileController.getUserById,
+);
 router.patch(
-    '/:id',
-    validatorMiddleware('idSchema'),
-    profileController.updateUser,
-)
+  '/:id',
+  mongoIdValidationRule(),
+  validate,
+  profileController.updateUser,
+);
 router.delete(
-    '/:id',
-    validatorMiddleware('idSchema'),
-    profileController.deleteUser,
-)
+  '/:id',
+  mongoIdValidationRule(),
+  validate,
+  profileController.deleteUser,
+);
 
-module.exports = router
+module.exports = router;
