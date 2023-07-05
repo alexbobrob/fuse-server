@@ -1,8 +1,5 @@
-const id = (value, helpers) => {
-    if (!value.match(/^[0-9a-fA-F]{24}$/)) {
-        return helpers.message('"{{#label}}" must be a valid mongo id')
-    }
-    return value
-}
+const isValidObjectId = require('./isValidObjectId/isValidObjectId.custom.validator');
 
-module.exports = id
+module.exports = {
+  ...isValidObjectId,
+};

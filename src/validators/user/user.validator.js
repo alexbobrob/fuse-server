@@ -1,10 +1,12 @@
-const Joi = require('joi')
-const id = require('../custom')
+const { param } = require('express-validator');
+const { isValidMongoId } = require('../custom');
 
-const idSchema = {
-    params: Joi.object().keys({
-        patientId: Joi.string().custom(id),
-    }),
-}
+const mongoIdValidationRule = () => {
+  return [
+    param('id')
+      .custom(isValidMongoId)
+      .withMessage('Id must be a valid MongoDB ID'),
+  ];
+};
 
-module.exports = { idSchema }
+module.exports = { mongoIdValidationRule };
