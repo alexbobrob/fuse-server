@@ -1,6 +1,9 @@
 const express = require('express');
 const { validate } = require('../../middlewares');
-const { mongoIdValidationRule } = require('../../validators');
+const {
+  mongoIdValidationRule,
+  updateUserValidationRule,
+} = require('../../validators');
 
 const { profileController } = require('../../controllers');
 
@@ -16,6 +19,7 @@ router.get(
 router.patch(
   '/:id',
   mongoIdValidationRule(),
+  updateUserValidationRule(),
   validate,
   profileController.updateUser,
 );
