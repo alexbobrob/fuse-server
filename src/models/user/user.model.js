@@ -1,7 +1,6 @@
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { isEmail } = require('validator');
-
-const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   fullName: {
@@ -19,7 +18,10 @@ const userSchema = new mongoose.Schema({
   city: { type: String },
   country: { type: String },
   region: { type: String },
-  firm: { type: String },
+  firm: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Firm',
+  },
   sector: { type: String },
   createdAt: { type: Date, immutable: true, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

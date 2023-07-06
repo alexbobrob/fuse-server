@@ -1,9 +1,9 @@
 const authController = require('./auth/auth.controller');
 const profileController = require('./user/user.controller');
-const agencyController = require('./agency/agency.controller');
+const firmController = require('./firm/firm.controller');
 
 module.exports = {
   authController,
   profileController,
-  agencyController,
+  firmController,
 };
