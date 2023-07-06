@@ -26,4 +26,6 @@ router.delete(
   profileController.deleteUser,
 );
 
+router.get('/search/:name', validate, profileController.getUserByName);
+
 module.exports = router;
