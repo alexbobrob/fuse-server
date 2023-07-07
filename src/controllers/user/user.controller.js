@@ -4,7 +4,7 @@ const { User } = db;
 
 const getUsers = async (_, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate('firm');
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve users' });
@@ -27,8 +27,9 @@ const getUserByName = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(id).populate('firm');
     if (!user) {
       res.status(404).json({ error: 'User not found' });
     }
@@ -40,7 +41,7 @@ const getUserById = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const { country, region, city, role, title, sector } = req.body;
+    const { country, region, city, role, title, sector, firm } = req.body;
 
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -51,6 +52,7 @@ const updateUser = async (req, res) => {
         role,
         title,
         sector,
+        firm,
       },
       { new: true },
     );

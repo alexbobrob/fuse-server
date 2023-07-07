@@ -2,42 +2,42 @@ const express = require('express');
 const { validate } = require('../../middlewares');
 const {
   mongoIdValidationRule,
-  createOrUpdateAgencyValidationRule,
+  createOrUpdateFirmValidationRule,
 } = require('../../validators');
 
-const { agencyController } = require('../../controllers');
+const { firmController } = require('../../controllers');
 
 const router = express.Router();
 
-router.get('/', agencyController.getAllAgencies);
+router.get('/', firmController.getAllFirms);
 
 router.get(
   '/:id',
   mongoIdValidationRule(),
   validate,
-  agencyController.getAgencyById,
+  firmController.getFirmById,
 );
 
 router.post(
   '/',
-  createOrUpdateAgencyValidationRule(),
+  createOrUpdateFirmValidationRule(),
   validate,
-  agencyController.createAgency,
+  firmController.createFirm,
 );
 
 router.patch(
   '/:id',
   mongoIdValidationRule(),
-  createOrUpdateAgencyValidationRule(),
+  createOrUpdateFirmValidationRule(),
   validate,
-  agencyController.updateAgency,
+  firmController.updateFirm,
 );
 
 router.delete(
   '/:id',
   mongoIdValidationRule(),
   validate,
-  agencyController.deleteAgencyById,
+  firmController.deleteFirmById,
 );
 
 module.exports = router;

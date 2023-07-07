@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const firmSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -10,4 +10,4 @@ const userSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Agency', userSchema);
+module.exports = mongoose.model('Firm', firmSchema);

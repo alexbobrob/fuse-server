@@ -1,9 +1,9 @@
 const express = require('express');
 const authRoute = require('./auth/auth.routes');
 const userRoutes = require('./user/user.routes');
-const agencyRoutes = require('./agency/agency.routes');
 const chatRoutes = require('./chat/chat.routes');
 const messageRoutes = require('./message/message.routes');
+const firmRoutes = require('./firm/firm.routes');
 
 const router = express.Router();
 
@@ -17,8 +17,8 @@ const routes = [
     route: userRoutes,
   },
   {
-    path: '/agencies',
-    route: agencyRoutes,
+    path: '/firms',
+    route: firmRoutes,
   },
   {
     path: '/chats',
