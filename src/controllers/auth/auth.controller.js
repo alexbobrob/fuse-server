@@ -54,7 +54,9 @@ const signIn = async (req, res) => {
 
     const accessToken = jwt.sign(user.toJSON(), process.env.JWT_SECRET);
 
-    res.status(200).json(accessToken);
+    res
+      .status(200)
+      .json({ id: user._id, fullName: user.fullName, accessToken });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }

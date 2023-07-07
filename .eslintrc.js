@@ -65,5 +65,6 @@ module.exports = {
 
     // Others
     'consistent-return': 'off',
+    'no-underscore-dangle': 'off',
   },
 };
