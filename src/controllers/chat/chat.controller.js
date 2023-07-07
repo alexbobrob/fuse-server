@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable no-underscore-dangle */
 const db = require('../../models');
 
 const { Chat } = db;
@@ -7,19 +5,19 @@ const { Chat } = db;
 const initializeChat = async (req, res) => {
   try {
     const {
-      logged_in_user_id,
-      user_id,
+      loggedInUserId,
+      userId,
       type,
-      allow_copy,
-      allow_add_members,
-      allow_external_members,
+      allowCopy,
+      allowAddMembers,
+      allowExternalMembers,
     } = req.body;
 
     const chat = await Chat.find({
       type: 'one-to-one',
       $and: [
-        { users: { $elemMatch: { $eq: logged_in_user_id } } },
-        { users: { $elemMatch: { $eq: user_id } } },
+        { users: { $elemMatch: { $eq: loggedInUserId } } },
+        { users: { $elemMatch: { $eq: userId } } },
       ],
     }).populate('users', '-password');
     if (chat.length > 0) return res.status(200).json(chat);
@@ -27,10 +25,10 @@ const initializeChat = async (req, res) => {
     const newChatData = {
       title: 'One to One Chat',
       type,
-      allow_copy,
-      allow_add_members,
-      allow_external_members,
-      users: [logged_in_user_id, user_id],
+      allowCopy,
+      allowAddMembers,
+      allowExternalMembers,
+      users: [loggedInUserId, userId],
     };
 
     const createdChat = await Chat.create(newChatData);
@@ -46,9 +44,9 @@ const initializeChat = async (req, res) => {
 
 const fetchChats = async (req, res) => {
   try {
-    const logged_in_user_id = req.params.id;
+    const loggedInUserId = req.params.id;
     const chat = await Chat.find({
-      $and: [{ users: { $elemMatch: { $eq: logged_in_user_id } } }],
+      $and: [{ users: { $elemMatch: { $eq: loggedInUserId } } }],
     }).populate('users', '-password');
 
     res.status(200).send(chat);

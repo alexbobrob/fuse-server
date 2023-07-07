@@ -36,7 +36,7 @@ module.exports = {
     'func-call-spacing': 'error',
     'implicit-arrow-linebreak': ['error', 'beside'],
     'keyword-spacing': 'error',
-    // 'multiline-ternary': ['error', 'never'],
+    'multiline-ternary': ['error', 'never'],
     'no-mixed-operators': 'error',
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
     'no-tabs': 'error',
@@ -65,5 +65,6 @@ module.exports = {
 
     // Others
     'consistent-return': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

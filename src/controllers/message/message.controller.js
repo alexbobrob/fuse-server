@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable no-underscore-dangle */
 const db = require('../../models');
 
 const { Message, User } = db;

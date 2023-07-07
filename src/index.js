@@ -1,10 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/order */
-/* eslint-disable import/no-unresolved */
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-
+const io = require('socket.io');
 const routes = require('./routes');
 require('dotenv').config();
 
@@ -30,7 +27,7 @@ const server = app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 });
 
-const io = require('socket.io')(server, {
+const socketIo = io(server, {
   pingTimeout: 60000,
   cors: {
     origin: 'http://localhost:3000',
@@ -38,11 +35,11 @@ const io = require('socket.io')(server, {
   },
 });
 
-io.on('connection', (socket) => {
+socketIo.on('connection', (socket) => {
   console.log('Connected to socket.io');
 
   socket.on('setup', (userData) => {
-    socket.join(userData.id);
+    socket.join(userData._id);
     socket.emit('connected');
   });
 
@@ -66,8 +63,8 @@ io.on('connection', (socket) => {
     });
   });
 
-  // socket.off('setup', () => {
-  //     console.log('USER DISCONNECTED')
-  //     socket.leave(userData.id)
-  // })
+  socket.off('setup', (userData) => {
+    console.log('USER DISCONNECTED');
+    socket.leave(userData._id);
+  });
 });
