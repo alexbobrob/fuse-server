@@ -17,11 +17,12 @@ const handleErrors = (err) => {
 };
 
 const signUp = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, fullName } = req.body;
   try {
     const newUser = await User.create({
       email,
       password,
+      fullName,
     });
     const accessToken = jwt.sign(
       { userId: newUser._id, email: newUser.email },
@@ -53,7 +54,6 @@ const signIn = async (req, res) => {
     }
 
     const accessToken = jwt.sign(user.toJSON(), process.env.JWT_SECRET);
-
     res
       .status(200)
       .json({ id: user._id, fullName: user.fullName, accessToken });
