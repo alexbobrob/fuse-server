@@ -32,7 +32,7 @@ const initializeChat = async (req, res) => {
     };
 
     const createdChat = await Chat.create(newChatData);
-    const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
+    const FullChat = await Chat.findOne({ id: createdChat._id }).populate(
       'users',
       '-password',
     );

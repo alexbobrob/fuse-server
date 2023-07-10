@@ -32,7 +32,7 @@ const sendMessage = async (req, res) => {
     let message = await Message.create(newMessage);
 
     message = await message.populate('sender');
-    message = await message.populate('chat', '-users');
+    message = await message.populate('chat');
     message = await User.populate(message, {
       path: 'chat.users',
     });
